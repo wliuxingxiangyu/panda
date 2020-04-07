@@ -26,7 +26,7 @@ Because PANDA has a few dependencies, we've encoded the build instructions into
 a script,, [panda/scripts/install\_ubuntu.sh](panda/scripts/install\_ubuntu.sh).
 The script should actually work on Debian 7/8 and Ubuntu 14.04, and it
 shouldn't be hard to translate the `apt-get` commands into whatever package
-manager your distribution uses. We currently only vouch for buildability  on
+manager your distribution uses. We currently only 保证vouch for buildability  on
 Debian 7/8 and Ubuntu 14.04, but we welcome pull requests to fix issues with
 other distros.
 

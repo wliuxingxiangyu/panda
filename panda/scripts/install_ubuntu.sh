@@ -92,14 +92,15 @@ fi
 
 popd
 
-if [ ! -e "build.sh" ]
-then
-  progress "Cloning PANDA into $(pwd) ..."
-  git clone https://github.com/panda-re/panda.git
-  cd panda
-else
-  progress "Already in PANDA directory."
-fi
+# if [ ! -e "build.sh" ]
+# then
+#   progress "Cloning PANDA into $(pwd) ..."
+#   git clone https://github.com/panda-re/panda.git
+#   cd panda
+# else
+#   progress "Already in PANDA directory."
+# fi
+
 progress "Trying to update DTC submodule (if necessary)..."
 git submodule update --init dtc || true
 progress "Building PANDA..."

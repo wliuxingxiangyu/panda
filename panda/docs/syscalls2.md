@@ -3,8 +3,10 @@ System calls 2 plugin
 
 The `syscalls2` plugin provides callbacks for system call entry and exit for a few operating systems and architectures.
 This kind of "operating system introspection" can be invaluable when reverse engineering.
+没有它，PANDA只能提供不透明 指令流instruction  的重播。
 Without it, PANDA provides little more than a replay of an opaque intruction stream. 
 
+`syscalls2`是通过自动生成代码的魔力实现的。给定一个包含系统调用列表以及数字和原型的文件，Python脚本将对其进行摘要处理，以生成编译后用于执行所有必要的检测的代码。
 `syscalls2` is made possible through the magic of auto-generated code. 
 Given a file which contains a list of system calls along with numbers and prototypes,
 a Python script digests that to generate code that is compiled to perform all the necessary instrumentation.
@@ -24,24 +26,30 @@ and then execute the `systenter` instruction to invoke a system call.
 For Windows prototypes, whose signatures do not change between OS releases (though functions may be added or removed, changing the numbering), there is an additional layer of autogeneration -- a master `all_windows_prototypes.txt` which contains the prototypes themselves, and is used by the `createWindowsPrototypes.py` script to renumber the calls for each OS. Volatility's system call tables are used to perform the renumbering.
 
 
-Caveats
+Caveats 注意事项
 ----
 
+目前支持Linux x86和ARM以及多个版本的Windows x86。目前不支持64位版本的Windows，因为我们尚未实现64位Windows系统调用ABI。64位支持的补丁将非常感谢！
 Linux x86 and ARM, as well as several versions of Windows x86 are currently supported. 64-bit versions of Windows are not currently supported, because we have not yet implemented the 64-bit Windows system call ABI. Patches for 64-bit support would be greatly appreciated!
 
 
-Use
+Use 
 ----
+
+如果你只想使用这个插件，只要读一下这个。
+
+假设您想编写一个插件，当在回放时跟踪到某些Win7系统调用时，该插件会执行某些操作（注意，插件只在回放时操作）。
+
+例如，您可能想知道何时创建进程，何时销毁进程，在这些时间点上对关联的Windows数据结构执行一些查询，以确定诸如pid和进程名之类的内容。
+
+Windows 7的相关系统调用是“NtCreateUserProcess”和“NtTerminateProcess”，它们的原型可以在“windows7-x86-prototypes.txt”中找到。
 
 If all you want to do is use this plugin, just read this bit. 
 
-Let's say you want to write a plugin that does something when certain Win7 system calls are encountered along a trace
-on replay (note that plugins only operate on replay).
-For instance, you might want to know when a process is created and when one is destroyed, performing some interrogation
-of the associated Windows data structures at those points in time to ascertain things like pid and process names.
+Let's say you want to write a plugin that does something when certain Win7 system calls are encountered along a trace on replay (note that plugins only operate on replay).
+For instance, you might want to know when a process is created and when one is destroyed, performing some interrogation of the associated Windows data structures at those points in time to ascertain things like pid and process names.
 
-The relevant system calls for Windows 7 are `NtCreateUserProcess` and `NtTerminateProcess`, and their prototypes
-can be found in `windows_7_x86_prototypes.txt`.
+The relevant system calls for Windows 7 are `NtCreateUserProcess` and `NtTerminateProcess`, and their prototypes can be found in `windows_7_x86_prototypes.txt`.
 
      NTSTATUS NtCreateUserProcess 
        (PHANDLE ProcessHandle, 
