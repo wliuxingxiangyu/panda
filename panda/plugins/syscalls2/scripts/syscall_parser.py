@@ -37,6 +37,15 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=LOGLEVEL)
 
 # Details about operating systems and architectures to be processed.
 KNOWN_OS = ['linux', 'windows_7', 'windows_xpsp2', 'windows_xpsp3', 'windows_2000']
+# x86_64,'qemu_target': 'TARGET_i386', https://github.com/qemu/qemu/tree/master/target
+'''
+    'x86_64': {
+    ¦   'bits': 64, 
+    ¦   'rt_callno_reg': 'env->regs[R_EAX]',    # register holding syscall number at runtime
+    ¦   'rt_sp_reg': 'env->regs[R_ESP]',        # register holding stack pointer at runtime
+    ¦   'qemu_target': 'TARGET_i386',           # qemu target name for this arch - used in guards
+    }, 
+'''
 KNOWN_ARCH = {
     'x86': {
         'bits': 32,

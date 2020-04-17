@@ -109,11 +109,12 @@ Autogenerating system call introspection
 Adding Support for a New Operating System
 ----
 
+Hz: syscall2_cn.md没有说添加新的体系结构.
 添加对新操作系统的支持相对简单，只要您有一个格式正确的原型文件。例如，假设要添加newos，这是一个x86操作系统。原型文件将命名为newos_x86_prototypes.txt。然后：
 
 1.将newos添加到syscall_parser.py中的已知_OS变量
 
-2.编辑recreate_all_os_arch.sh并将newos x86添加到命令行的末尾。
+2.编辑新文件 recreate_all_os_arch.sh并将newos x86添加到命令行的末尾。
 
 3.在syscalls2.cpp中为它添加另一个枚举，并为它填写每个配置文件函数指针；这些函数实际上告诉syscalls2系统调用ABI是什么（即，如何检索系统调用参数）。
 
