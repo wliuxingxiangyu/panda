@@ -4,7 +4,7 @@ Plugin: syscalls2
 Summary
 -------
 
-“syscalls2”插件提供回调，允许在guest中发生系统调用时发出通知，并且只要来宾操作系统是“syscalls2”支持的这些操作系统之一，就可以为每个系统调用提供参数。
+“syscalls2”插件提供回调，允许在guest中发生系统调用时发出通知，并且只要guest操作系统是“syscalls2”支持的这些操作系统之一，就可以为每个系统调用提供参数。
 
 这是通过基于初始原型文件自动生成一堆代码来实现的。有关详细信息，请查看“syscalls2/syscall_parser.py”和其中一个原型文件，如“syscalls2/prototypes/linux_x86_prototypes.txt”。
 
@@ -125,7 +125,7 @@ Description: Returns a pointer to a `syscall_meta_t` struct containing meta-info
 Example
 -------
 
-一般来说，一个插件使用syscalls2，另一个插件为特定的系统调用集注册回调。例如，可以编写一个名为filereadmon的插件，该插件使用以下内容拦截对Windows上NtReadFile的调用：
+一般来说，一个插件使用syscalls2，另一个插件为特定的系统调用集 注册回调。例如，可以编写一个名为filereadmon的插件，该插件使用以下内容拦截对Windows上NtReadFile的调用：
 In general one uses `syscalls2` with another plugin that registers callbacks for specific set of system calls. For example, one could write a plugin called `filereadmon` that intercepts calls to `NtReadFile` on Windows using something like:
 
 ```C
@@ -177,10 +177,11 @@ hzExp
 
 ```
 wanghuozhu@dlserver:~/ws/other/panda/x86_64-softmmu$  ./qemu-system-x86_64 -replay hi  -os linux-64-ubuntu:4.15.0-65-generic  -panda syscalls2: linux-64-ubuntu:4.15.0-65-generic /yiyuan/data/home/wanghuozhu/ws/snapshot/iie_snapshot/snapshot_4M_1d_12h_29m_8s.img
+
 PANDA[core]:os_familyno=2 bits=64 os_details=ubuntu:4.15.0-65-generic
 PANDA[syscalls2]:adding argument .
 PANDA[core]:initializing syscalls2
-PANDA[syscalls2]:no support for 64-bit linux
+PANDA[syscalls2]:no support for 64-bit linux  # hz-
 FAIL: Unable to load plugin `/yiyuan/data/home/wanghuozhu/ws/other/panda/x86_64-softmmu/panda/plugins/panda_syscalls2.so'
 Aborted (core dumped)
 wanghuozhu@dlserver:~/ws/other/panda/x86_64-softmmu$
